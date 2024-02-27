@@ -5,8 +5,9 @@ import {
     NAME_KEY,
     QUERY_PARAM,
     SYMBOL_KEY,
-} from "@/app/models/api.constants";
+} from "@/app/models/common.constants";
 import { numberOfAutocompleteItems } from "@/app/models/routes.constants";
+import { DetailItemModel } from "@/app/models/DetailItem.model";
 const fetchAutocompleteSuggestions = async (
     query: string
 ): Promise<AutocompleteItemModel[]> => {
@@ -14,10 +15,10 @@ const fetchAutocompleteSuggestions = async (
     const data = await response.json();
     if ("bestMatches" in data) {
         return data.bestMatches.map(
-            (suggestion: Record<string, string>) =>
+            (match: DetailItemModel) =>
                 ({
-                    [SYMBOL_KEY]: suggestion[SYMBOL_KEY],
-                    [NAME_KEY]: suggestion[NAME_KEY],
+                    [SYMBOL_KEY]: match[SYMBOL_KEY],
+                    [NAME_KEY]: match[NAME_KEY],
                 } as AutocompleteItemModel)
         ).slice(0, numberOfAutocompleteItems);
     }

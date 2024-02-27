@@ -5,7 +5,7 @@ import {
     NAME_KEY,
     QUERY_PARAM,
     SYMBOL_KEY,
-} from "@/app/models/api.constants";
+} from "@/app/models/common.constants";
 const fetchStockDetails = async (
     query: string
 ): Promise<DetailItemModel | undefined> => {
