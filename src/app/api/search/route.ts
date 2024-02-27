@@ -13,7 +13,7 @@ const fetchStockDetails = async (
     const data = await response.json();
     if ("bestMatches" in data) {
         return data.bestMatches.find(
-            (match: Record<string, string>) =>
+            (match: DetailItemModel) =>
                 match[SYMBOL_KEY] === query || match[NAME_KEY] === query
         );
     }
