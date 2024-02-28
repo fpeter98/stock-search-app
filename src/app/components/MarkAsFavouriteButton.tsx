@@ -22,7 +22,7 @@ export const MarkAsFavouriteButton: FC<MarkAsFavouriteButtonProps> = ({ details 
     return (
         <button
             type="button"
-            className="flex items-center gap-3 bg-yellow-50 p-4 rounded-full"
+            className="flex items-center gap-3 bg-yellow-50 p-4 rounded-full hover:bg-yellow-200 active:bg-yellow-500"
             onClick={handleFavouriteClicked}
         >
             Mark as favourite

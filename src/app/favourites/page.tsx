@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { FAVOURITES_LOCAL_STORAGE_KEY } from "@/app/models/common.constants";
+import { FavouriteStockItem } from "@/app/components/FavouriteStockItem";
 
 const Favourites = () => {
     const [favoriteStocks, setFavoriteStocks] = useState<string[]>([]);
@@ -26,12 +27,8 @@ const Favourites = () => {
             <div className="flex items-center justify-center flex-col">
                 {favoriteStocks.length
                     ? (favoriteStocks.map((favouriteStock, index) => (
-                        <div
-                            className="text-neutral-950 font-bold text-center border-amber-200 border-2 w-1/3 bg-white"
-                            key={favouriteStock}
-                        >
-                            {index + 1}. {favouriteStock}
-                        </div>)))
+                        <FavouriteStockItem key={favouriteStock} favouriteStock={favouriteStock} position={index + 1} />
+                    )))
                     : (
                     <span className="text-white text-2xl">No favourite stocks yet.</span>
                 )}

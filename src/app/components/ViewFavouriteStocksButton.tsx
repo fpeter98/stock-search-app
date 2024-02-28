@@ -13,7 +13,7 @@ export const ViewFavouriteStocksButton = () => {
     return (
         <button
             type="button"
-            className="flex items-center gap-3 text-white text-xl bg-blue-400 rounded-full p-3"
+            className="flex items-center gap-3 text-white text-xl bg-blue-400 rounded-full p-3 hover:bg-blue-300 active:bg-blue-800"
             onClick={handleViewFavouriteClick}
         >
             View favourite stocks
