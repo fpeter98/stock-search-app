@@ -7,6 +7,7 @@ import { QUERY_PARAM } from "@/app/models/common.constants";
 import { ViewFavouriteStocksButton } from "@/app/components/ViewFavouriteStocksButton";
 import { useDetails } from "@/app/hooks/useDetails";
 import { MarkAsFavouriteButton } from "@/app/components/MarkAsFavouriteButton";
+import { StockPriceChart } from "@/app/components/StockPriceChart";
 
 const DetailView = () => {
     const searchParams = useSearchParams();
@@ -38,7 +39,7 @@ const DetailView = () => {
                 {haveDetails && details && <MarkAsFavouriteButton details={details} />}
                 <ViewFavouriteStocksButton />
             </div>
-            <div className=" flex flex-wrap justify-center items-center flex-row gap-6">
+            <div className=" flex flex-wrap justify-center items-center flex-row gap-6 mb-12">
                 {haveDetails && detailItems}
                 {emptyResults && (
                     <span className="text-white text-2xl">
@@ -51,6 +52,7 @@ const DetailView = () => {
                     </span>
                 )}
             </div>
+            {haveDetails && details && <StockPriceChart symbolValue={details["01. symbol"]}/>}
         </div>
     );
 };
