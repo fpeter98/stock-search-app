@@ -8,7 +8,10 @@ import { DETAIL_VIEW_ROUTE } from "@/app/models/routes.constants";
 export const SearchBar = () => {
     const [query, setQuery] = useState("");
     const [error, setError] = useState<Error | null>(null);
-    const [autocompleteItems, setAutocompleteItems] = useState<AutocompleteItemModel[] | null>(null);
+    const [cachedAutocompleteItems, setCachedAutocompleteItems] =
+        useState<Record<string, AutocompleteItemModel[]> | null>(null);
+    const [autocompleteItems, setAutocompleteItems] =
+        useState<AutocompleteItemModel[] | null>(null);
     const router = useRouter();
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -21,10 +24,18 @@ export const SearchBar = () => {
     useEffect(() => {
         const fetchAutocomplete = async () => {
             if(query) {
+                if(cachedAutocompleteItems && query in cachedAutocompleteItems) {
+                    setAutocompleteItems(cachedAutocompleteItems[query]);
+                    return;
+                }
                 try {
                     const response = await fetch(`/api/autocomplete?query=${query}`);
                     const data: AutocompleteItemModel[] = await response.json();
                     setAutocompleteItems(data);
+                    setCachedAutocompleteItems({
+                        ...cachedAutocompleteItems,
+                        [query]: data,
+                    });
                 } catch (error: unknown) {
                     if(error instanceof Error) {
                         setError(error);
@@ -35,7 +46,7 @@ export const SearchBar = () => {
             }
         };
         fetchAutocomplete();
-    }, [query])
+    }, [cachedAutocompleteItems, query]);
 
     return (
         <div className="w-1/2 min-w-72 relative">
