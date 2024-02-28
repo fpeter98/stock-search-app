@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
       <html lang="en">
-      <body className="bg-[url('../../public/stock-background.jpg')] bg-cover">{children}</body>
+        <body className="bg-[url('../../public/stock-background.jpg')] bg-cover">{children}</body>
       </html>
   );
 }

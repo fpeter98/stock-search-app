@@ -1,18 +1,13 @@
-'use client';
+"use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { Autocomplete } from "@/app/components/Autocomplete";
-import { AutocompleteItemModel } from "@/app/models/AutocompleteItem.model";
 import { DETAIL_VIEW_ROUTE } from "@/app/models/routes.constants";
+import { useAutocomplete } from "@/app/hooks/useAutocomplete";
+import Image from "next/image";
 export const SearchBar = () => {
-    const [query, setQuery] = useState("");
-    const [error, setError] = useState<Error | null>(null);
-    const [cachedAutocompleteItems, setCachedAutocompleteItems] =
-        useState<Record<string, AutocompleteItemModel[]> | null>(null);
-    const [autocompleteItems, setAutocompleteItems] =
-        useState<AutocompleteItemModel[] | null>(null);
     const router = useRouter();
+    const { query, setQuery, error, autocompleteComponent } = useAutocomplete();
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         if (query) {
@@ -20,33 +15,6 @@ export const SearchBar = () => {
             router.push(`/${DETAIL_VIEW_ROUTE}?query=${encodedQuery}`);
         }
     };
-
-    useEffect(() => {
-        const fetchAutocomplete = async () => {
-            if(query) {
-                if(cachedAutocompleteItems && query in cachedAutocompleteItems) {
-                    setAutocompleteItems(cachedAutocompleteItems[query]);
-                    return;
-                }
-                try {
-                    const response = await fetch(`/api/autocomplete?query=${query}`);
-                    const data: AutocompleteItemModel[] = await response.json();
-                    setAutocompleteItems(data);
-                    setCachedAutocompleteItems({
-                        ...cachedAutocompleteItems,
-                        [query]: data,
-                    });
-                } catch (error: unknown) {
-                    if(error instanceof Error) {
-                        setError(error);
-                    }
-                }
-            } else {
-                setAutocompleteItems(null);
-            }
-        };
-        fetchAutocomplete();
-    }, [cachedAutocompleteItems, query]);
 
     return (
         <div className="w-1/2 min-w-72 relative">
@@ -64,24 +32,21 @@ export const SearchBar = () => {
                 >
                     Search
                 </button>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
+                <Image
+                    src="./search-icon.svg"
                     className="absolute lg:hidden w-6 h-6 text-gray-600 left-2.5 bottom-4 cursor-pointer"
+                    alt="search icon"
+                    width={15}
+                    height={15}
                     onClick={handleSubmit}
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-                    />
-                </svg>
+                />
             </form>
-            {autocompleteItems?.length && <Autocomplete items={autocompleteItems} query={query} />}
-            {error && <span className="text-red-500">Error while fetching autocomplete results: {error.message}</span>}
+            {autocompleteComponent}
+            {error && (
+                <span className="text-red-500">
+                    Error while fetching autocomplete results: {error.message}
+                </span>
+            )}
         </div>
     );
 };
