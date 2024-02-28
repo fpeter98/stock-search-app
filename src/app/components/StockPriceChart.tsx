@@ -36,7 +36,7 @@ export const StockPriceChart: FC<StockPriceChartProps> = ({ symbolValue}) => {
                 labels: [],
                 datasets: [
                     {
-                        label: 'Stock opening prices in the last 50 days',
+                        label: 'Stock opening prices in the last 50 business days',
                         data: [],
                         borderColor: 'rgb(53,160,120)',
                         backgroundColor: 'rgba(255, 99, 132, 0.5)',

@@ -43,12 +43,12 @@ const DetailView = () => {
                 {haveDetails && detailItems}
                 {emptyResults && (
                     <span className="text-white text-2xl">
-                        No details found for the query
+                        No stock details found. Please provide a valid stock symbol or name
                     </span>
                 )}
                 {error && (
                     <span className="text-red-500">
-                        Error while loading details: {error.message}
+                        Error while loading stock details: {error.message}
                     </span>
                 )}
             </div>

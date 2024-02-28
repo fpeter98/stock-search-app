@@ -6,7 +6,7 @@ import {
     QUERY_PARAM,
     SYMBOL_KEY,
 } from "@/app/models/common.constants";
-import { numberOfAutocompleteItems } from "@/app/models/routes.constants";
+import { NUMBER_OF_AUTOCOMPLETE_ITEMS } from "@/app/models/routes.constants";
 const fetchAutocompleteSuggestions = async (
     query: string
 ): Promise<AutocompleteItemModel[]> => {
@@ -19,7 +19,7 @@ const fetchAutocompleteSuggestions = async (
                     [SYMBOL_KEY]: match[SYMBOL_KEY],
                     [NAME_KEY]: match[NAME_KEY],
                 } as AutocompleteItemModel)
-        ).slice(0, numberOfAutocompleteItems);
+        ).slice(0, NUMBER_OF_AUTOCOMPLETE_ITEMS);
     }
 
     return [];

@@ -35,10 +35,12 @@ export const useAutocomplete: UseAutocomplete = () => {
                     const response = await fetch(`/api/autocomplete?query=${query}`);
                     const data: AutocompleteItemModel[] = await response.json();
                     setAutocompleteItems(data);
-                    setCachedAutocompleteItems({
-                        ...cachedAutocompleteItems,
-                        [query]: data,
-                    });
+                    if(data.length) {
+                        setCachedAutocompleteItems({
+                            ...cachedAutocompleteItems,
+                            [query]: data,
+                        });
+                    }
                 } catch (error: unknown) {
                     if (error instanceof Error) {
                         setError(error);

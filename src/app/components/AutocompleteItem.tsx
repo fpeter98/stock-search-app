@@ -4,6 +4,7 @@ import { AutocompleteItemModel } from "@/app/models/AutocompleteItem.model";
 import { FC } from "react";
 import { useRouter } from "next/navigation";
 import { DETAIL_VIEW_ROUTE } from "@/app/models/routes.constants";
+import { NAME_KEY, SYMBOL_KEY } from "@/app/models/common.constants";
 
 interface AutocompleteItemProps {
     item: AutocompleteItemModel;
@@ -27,13 +28,15 @@ export const AutocompleteItem: FC<AutocompleteItemProps> = ({
                 highlightClassName="font-bold bg-transparent"
                 searchWords={[query]}
                 autoEscape={true}
-                textToHighlight={item["1. symbol"]}
+                textToHighlight={item[SYMBOL_KEY]}
+                className="text-left"
             />
             <Highlighter
                 highlightClassName="font-bold bg-transparent"
                 searchWords={[query]}
                 autoEscape={true}
-                textToHighlight={item["2. name"]}
+                textToHighlight={item[NAME_KEY]}
+                className="text-right"
             />
         </div>
     );
