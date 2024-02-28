@@ -7,6 +7,7 @@ import { AutocompleteItemModel } from "@/app/models/AutocompleteItem.model";
 import { DETAIL_VIEW_ROUTE } from "@/app/models/routes.constants";
 export const SearchBar = () => {
     const [query, setQuery] = useState("");
+    const [error, setError] = useState<Error | null>(null);
     const [autocompleteItems, setAutocompleteItems] = useState<AutocompleteItemModel[] | null>(null);
     const router = useRouter();
     const handleSubmit = (event: FormEvent) => {
@@ -20,9 +21,15 @@ export const SearchBar = () => {
     useEffect(() => {
         const fetchAutocomplete = async () => {
             if(query) {
-                const response = await fetch(`/api/autocomplete?query=${query}`);
-                const data: AutocompleteItemModel[] = await response.json();
-                setAutocompleteItems(data);
+                try {
+                    const response = await fetch(`/api/autocomplete?query=${query}`);
+                    const data: AutocompleteItemModel[] = await response.json();
+                    setAutocompleteItems(data);
+                } catch (error: unknown) {
+                    if(error instanceof Error) {
+                        setError(error);
+                    }
+                }
             } else {
                 setAutocompleteItems(null);
             }
@@ -62,7 +69,8 @@ export const SearchBar = () => {
                     />
                 </svg>
             </form>
-            {autocompleteItems && <Autocomplete items={autocompleteItems} query={query} />}
+            {autocompleteItems?.length && <Autocomplete items={autocompleteItems} query={query} />}
+            {error && <span className="text-red-500">Error while fetching autocomplete results: {error.message}</span>}
         </div>
     );
 };

@@ -17,6 +17,7 @@ export const AutocompleteItem: FC<AutocompleteItemProps> = ({
     const onAutocompleteItemClick = () => {
         router.push(`/${DETAIL_VIEW_ROUTE}?query=${item["1. symbol"]}`);
     };
+
     return (
         <div
             className="flex justify-between bg-white py-2 hover:bg-blue-300 hover:cursor-pointer"

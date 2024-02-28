@@ -3,11 +3,13 @@ import { useSearchParams } from "next/navigation";
 import { DetailItem } from "@/app/components/DetailItem";
 import { DetailItemModel } from "@/app/models/DetailItem.model";
 import { useEffect, useMemo, useState } from "react";
+import { QUERY_PARAM } from "@/app/models/common.constants";
+
 const DetailView = () => {
     const [details, setDetails] = useState<DetailItemModel | null>(null);
     const [error, setError] = useState<Error | null>(null);
     const searchParams = useSearchParams();
-    const queryParam = searchParams.get('query');
+    const queryParam = searchParams.get(QUERY_PARAM);
     const encodedQueryParam = encodeURI(queryParam || "");
 
     useEffect(() => {

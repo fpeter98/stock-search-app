@@ -7,7 +7,6 @@ import {
     SYMBOL_KEY,
 } from "@/app/models/common.constants";
 import { numberOfAutocompleteItems } from "@/app/models/routes.constants";
-import { DetailItemModel } from "@/app/models/DetailItem.model";
 const fetchAutocompleteSuggestions = async (
     query: string
 ): Promise<AutocompleteItemModel[]> => {
@@ -15,7 +14,7 @@ const fetchAutocompleteSuggestions = async (
     const data = await response.json();
     if ("bestMatches" in data) {
         return data.bestMatches.map(
-            (match: DetailItemModel) =>
+            (match: Record<string, string>) =>
                 ({
                     [SYMBOL_KEY]: match[SYMBOL_KEY],
                     [NAME_KEY]: match[NAME_KEY],

@@ -1,3 +1,4 @@
-import { DetailItemModel } from "@/app/models/DetailItem.model";
-
-export type AutocompleteItemModel = Pick<DetailItemModel, "1. symbol" | "2. name">;
+export interface AutocompleteItemModel {
+    "1. symbol": string;
+    "2. name": string;
+}
